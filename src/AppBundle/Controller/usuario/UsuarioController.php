@@ -11,6 +11,8 @@ namespace AppBundle\Controller\usuario;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\UsuarioType;
 
+use http\Env\Response;
+use Symfony\Bridge\Twig\Extension\HttpFoundationExtension;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,9 +28,37 @@ class UsuarioController extends controller
      */
     public function indexUsuario()
     {
-        return $this->render('@App/Usuario/vistadeusuario.html.twig');
+        return $this->render('@App/Usuario/registrousuarios.html.twig');
     }
 
+    /**
+     * @Route("/login",name="login",options={"expose"=true})
+     *
+     */
+    public function loginUsuario(){
+
+        return $this->render("@App/Usuario/login.html.twig");
+
+    }
+
+
+    /**
+     * @Route("/usuario/{id}",name="actualizar",options={"expose"=true})
+     * @Method("GET")
+     * @param Usuario $usuarios
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function actualizarU(Usuario $usuario)
+    {
+
+
+        return $this->render("@App/Usuario/editarusuario.html.twig",
+            ["usuarios" => $usuario]
+
+        );
+
+
+    }
 
 
 
@@ -65,25 +95,46 @@ class UsuarioController extends controller
     /**
      * @Route("/rest/usuarios/{id}",name="actualizar_usuario",options={"expose"=true})
      * @Method("PUT")
+     * @param Request $request
+     * @param Usuario $usuario
+     * @return JsonResponse
      */
-    public function actualizarUsuario(Request $request)
+    public function actualizarUsuario(Request $request, Usuario $usuario)
     {
 
         $data = $request->getContent();
         $data = json_decode($data, true);
 
-        $usuario = new Usuario();
         $form = $this->createForm(UsuarioType::class, $usuario);
         $form->submit($data);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
-            $em->persist($usuario);
-            $em->flush();
-        }
+        $em = $this->getDoctrine()->getManager();
 
-        return new JsonResponse(null, 400);
+        $em->flush();
+
+        $jsonContent = $this->get("serializer")->serialize($usuario, 'json');
+        $jsonContent = json_decode($jsonContent, true);
+
+        return new JsonResponse($jsonContent);
+        return null;
+
+
+    }
+
+
+    /**
+     * @Route("/rest/eliminar/{id}")
+     * @Method("DELETE")
+     * @param Usuario $id
+     */
+    public function eliminarUsuario($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($id);
+        $em->flush();
+
+
     }
 
 

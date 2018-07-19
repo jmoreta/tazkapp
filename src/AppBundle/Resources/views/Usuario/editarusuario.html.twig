@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div style="margin-left: 200px;margin-top: 50px;">
+        <h1 class="glyphicon-edit"> Edicion de usuarios</h1>
+    </div>
+    <form>
+        <div>
+            <input hidden id="id" type="text" value="{{ usuarios.id }}">
+            <input id="nombre" type="text" value="{{ usuarios.nombre }}">
+            <input id="username" type="text" value="{{ usuarios.username }}">
+            <input id="tipousuario" type="text" value="{{ usuarios.tipousuario }}">
+
+
+            <button type="button" class="btn btn-primary btn btn-sm " onclick="actualizar()">Actualizar</button>
+        </div>
+    </form>
+
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+
+    <script>
+       function actualizar(){
+
+            var id=$('#id').val();
+            var nombre=$('#nombre').val();
+            var username=$('#username').val();
+            var tipousuario=$('#tipousuario').val();
+
+            var data={
+                nombre:nombre,
+                username:username,
+                tipousuario:tipousuario
+            };
+
+            $.ajax({
+                url:Routing.generate('actualizar_usuario',{id:id}),
+                type: 'PUT',
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (err) {
+                    console.log(err.responseText)
+                }
+            });
+        };
+
+    </script>
+
+{% endblock %}

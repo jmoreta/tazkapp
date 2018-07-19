@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+        .boxdiv {
+            border: #5bc0de 5px solid;
+            /*background: #eee;*/
+            /*padding-left: 70px;*/
+            margin: 0px 500px 0px 150px;
+        }
+    </style>
+
+    <form class="form-group ">
+        <div style="margin-left: 250px"><h1>Registro de usuarios</h1></div>
+
+        <div class="boxdiv jumbotron ">
+            <label for="Username">Email</label>
+            <div>
+                <input type="email" id="Username">
+            </div>
+
+            <label for="Nombre">Nombre</label>
+            <div>
+                <input type="text" id="Nombre">
+            </div>
+
+            <label for="Tipousuario">Tipousuario</label>
+            <div>
+                <select name="tipousuario" id="Tipousuario">
+                    <option value="Normal">Normal</option>
+                    <option value="Tecnico">Tecnico</option>
+                    <option value="Supervisor">Supervisor</option>
+                </select>
+            </div>
+
+            <label for="Contraseña">Contraseña</label>
+            <div>
+                <input type="password" id="Contraseña">
+            </div>
+
+            <label for="recontrasena">Repetir Contrasena</label>
+            <div>
+                <input type="password" id="recontrasena">
+            </div>
+
+            <div style="padding-top: 5px">
+                <span><a href="{{ path('login') }}">Login</a></span>
+                <span><button type="button" class="btn btn-primary btn-lg"
+                              onclick="registrar()">Registrar</button></span>
+            </div>
+
+        </div>
+
+
+    </form>
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <script>
+        function registrar() {
+            var username = $('#Username').val();
+            var nombre = $('#Nombre').val();
+            var tipousuario = $('#Tipousuario').val();
+            var contrasena = $('#Contraseña').val();
+
+            var data = {
+
+                username: username,
+                nombre: nombre,
+                tipousuario: tipousuario,
+                contrasena: contrasena
+            }
+
+
+            $.ajax({
+                url: Routing.generate('insertar_usuario', {
+                    username: username,
+                    nombre: nombre,
+                    tipousuario: tipousuario,
+                    contrasena: contrasena
+                }),
+                type: 'POST',
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+
+
+            });
+
+
+        };
+
+
+    </script>
+
+
+{% endblock %}
