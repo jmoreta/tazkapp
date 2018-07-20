@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/login",name="login",options={"expose"=true})
+     * @Route("/login",name="loginp",options={"expose"=true})
      *
      */
     public function loginUsuario(Request $request, AuthenticationUtils $authenticationUtils)

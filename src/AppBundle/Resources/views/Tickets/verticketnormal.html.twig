@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="text-primary" style="margin-top: 60px ">
+    <textarea rows="10" cols="50" disabled>
+
+
+    </textarea>
+</div>
+
+{% endblock %}
+
+
+
+{% block titulo %}Tickets{% endblock %}
+
+{% block tab1 %}Tickets{% endblock %}
+{% block tab2 %}Pendientes{% endblock %}
+{% block tab3 %}En Proceso{% endblock %}
+
+{% block route1 %}
+    {{ path('vista_tickets') }}
+{% endblock %}
+
+{% block route2 %}
+    {{ path('tickets_pendientes') }}
+{% endblock %}
+
+{% block route3 %}
+    {{ path('Tickets_enproceso') }}
+{% endblock %}

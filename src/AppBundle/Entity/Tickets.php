@@ -78,11 +78,29 @@ class Tickets
     private $estado;
 
 
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Usuario",inversedBy="tickets")
-//     * @ORM\JoinColumn(name="usuario_id",referencedColumnName="id")
-//     */
-//    private $usuario;
+    /**
+     * @ORM\ManyToOne(targetEntity="Usuario",inversedBy="tickets")
+     * @ORM\JoinColumn(name="usuarioId",referencedColumnName="id")
+     */
+    private $usuario;
+
+    /**
+     * @return mixed
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * @param mixed $usuario
+     * @return Tickets
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+        return $this;
+    }
 
 
     /**
@@ -246,21 +264,6 @@ class Tickets
         $this->estado = $estado;
         return $this;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

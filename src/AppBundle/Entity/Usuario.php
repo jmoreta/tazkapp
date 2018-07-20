@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -52,8 +53,8 @@ class Usuario implements UserInterface, \Serializable
     private $contrasena;
 
 
-
-    public function getSalt(){
+    public function getSalt()
+    {
 
         return null;
     }
@@ -78,12 +79,12 @@ class Usuario implements UserInterface, \Serializable
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-     return serialize([
+        return serialize([
 
-         $this->id,
-         $this->username,
-         $this->contrasena,
-     ]);
+            $this->id,
+            $this->username,
+            $this->contrasena,
+        ]);
     }
 
     /** @see \Serializable::unserialize() */
@@ -94,10 +95,37 @@ class Usuario implements UserInterface, \Serializable
             $this->id,
             $this->contrasena,
 
-            )=unserialize($serialized,array('allowed_classes'=>false));
+            ) = unserialize($serialized, array('allowed_classes' => false));
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+
+    /**
+     * @param mixed $tickets
+     * @return Usuario
+     */
+    public function setTickets($tickets)
+    {
+        $this->tickets = $tickets;
+        return $this;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="Tickets",mappedBy="usuario")
+     */
+    private $tickets;
+
+    public function _construct()
+    {
+        $this->tickets = new ArrayCollection();
+    }
 
 
     /**
@@ -189,7 +217,6 @@ class Usuario implements UserInterface, \Serializable
         $this->contrasena = $contrasena;
         return $this;
     }
-
 
 
 }

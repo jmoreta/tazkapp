@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1> Mis Tickets</h1>
+    <div>
+        <h1> Mis Tickets</h1>
+        <a id="nuevotickets" class="btn btn-primary" href="{{path('nuevo_tickets')}}">Nuevo Tickets </a>
+
+    </div>
+
 
     <table class="table table-striped">
         <thead>
@@ -9,6 +14,7 @@
         <tr>
             <th>#</th>
             <th>Fecha</th>
+            <th>Creado Por</th>
             <th>Asignado A</th>
             <th>Subject</th>
             <th>Estado</th>
@@ -25,13 +31,15 @@
 
             <tr>
                 <th>{{ ticket.id }}</th>
-                <th>{{  ticket.fecha.date}}</th>
-                <th>{{ ticket.usuarioAsignadoId }}
+                <th>{{ ticket.fecha.date }}</th>
+                <th>{{ ticket.usuarioId }}</th>
+                <th>{{ ticket.usuario.nombre }}
                 <th>{{ ticket.subject }}</th>
-                <th>{{ticket.estado}}</th>
-                <th>{{ ticket.prioridad}}</th>
+                <th>{{ ticket.estado }}</th>
+                <th>{{ ticket.prioridad }}</th>
+
                 <th>
-                    <a title="Ver" class="btn btn-sm btn-primary" href="#ver">Ver</a>
+                    <a title="Ver"  id="vertick" class="btn btn-sm btn-primary" href="{{ path('vertickets_normal') }}">Ver</a>
                 </th>
 
                 </th>
@@ -60,6 +68,21 @@
 {% block tab1 %}Tickets{% endblock %}
 {% block tab2 %}Pendientes{% endblock %}
 {% block tab3 %}En Proceso{% endblock %}
+
+{% block route1 %}
+    {{ path('vista_tickets') }}
+{% endblock %}
+
+{% block route2 %}
+    {{ path('tickets_pendientes') }}
+{% endblock %}
+
+{% block route3 %}
+    {{ path('Tickets_enproceso') }}
+{% endblock %}
+
+
+
 
 {% block status %}class="active"{% endblock %}
 

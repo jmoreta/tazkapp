@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Nueva Tarea</h2>
+    <form>
+        <div>
+            <button class="btn btn-danger">Cancelar</button>
+            <button class="btn btn-primary" onclick="guaradarTicket()">Guardar</button>
+        </div>
+
+
+        <label for="usuario">Asignar A:</label>
+        <div>
+            <select id="usuario" name="asignara" >
+                <option value="juan">juan</option>
+            </select>
+        </div>
+
+        <label for="Asunto"></label>
+        <div>
+            <input id="Asunto" type="text">
+        </div>
+
+        <label for="Descripcion">Descripcion</label>
+        <div>
+            <textarea id="Descripcion" rows="50" cols="50" ></textarea>
+        </div>
+    </form>
+
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        function guaradarTicket() {
+            var usuario = $('#usuario').val();
+            var asunto = $('#Asunto').val();
+            var descripcion = $('#Descripcion').val();
+
+            var data = {
+                "usuario":usuario,
+                "subject":asunto,
+                "descripcion":descripcion
+            };
+
+            $.ajax({
+                url:Routing.generate("crear_tickets",{"usuario":usuario,"subject":asunto,"descripcion":descripcion}),
+                type: 'POST',
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function (err) {
+                    console.log(err.text)
+                }
+
+            })
+
+        }
+
+
+    </script>
+{% endblock %}
+
+
+
+{% block titulo %}Tickets{% endblock %}
+{% block tab1 %}Tickets{% endblock %}
+{% block tab2 %}Pendientes{% endblock %}
+{% block tab3 %}En Proceso{% endblock %}
+
+{% block route1 %}
+    {{ path('vista_tickets') }}
+{% endblock %}
+
+{% block route2 %}
+    {{ path('tickets_pendientes') }}
+{% endblock %}
+
+{% block route3 %}
+    {{ path('Tickets_enproceso') }}
+{% endblock %}
+
+
