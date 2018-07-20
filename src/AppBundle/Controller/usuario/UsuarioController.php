@@ -11,14 +11,16 @@ namespace AppBundle\Controller\usuario;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\UsuarioType;
 
-use http\Env\Response;
-use Symfony\Bridge\Twig\Extension\HttpFoundationExtension;
+
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 
 class UsuarioController extends controller
@@ -31,15 +33,6 @@ class UsuarioController extends controller
         return $this->render('@App/Usuario/registrousuarios.html.twig');
     }
 
-    /**
-     * @Route("/login",name="login",options={"expose"=true})
-     *
-     */
-    public function loginUsuario(){
-
-        return $this->render("@App/Usuario/login.html.twig");
-
-    }
 
 
     /**
@@ -59,6 +52,17 @@ class UsuarioController extends controller
 
 
     }
+
+
+    /**
+     * @Route("/admin")
+     */
+    public function adminAction()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
+    }
+
+
 
 
 

@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Usuario
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -50,18 +52,51 @@ class Usuario
     private $contrasena;
 
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="Tickets",mappedBy="usuario")
-//     */
-//    private $tickets;
-//
-//    public function __construct()
-//    {
-//        $this->tickets = new ArrayCollection();
-//    }
 
+    public function getSalt(){
 
+        return null;
+    }
 
+    public function getPassword()
+    {
+        // TODO: Implement getPassword() method.
+        return $this->contrasena;
+    }
+
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+     return serialize([
+
+         $this->id,
+         $this->username,
+         $this->contrasena,
+     ]);
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->username,
+            $this->id,
+            $this->contrasena,
+
+            )=unserialize($serialized,array('allowed_classes'=>false));
+
+    }
 
 
 
@@ -154,11 +189,6 @@ class Usuario
         $this->contrasena = $contrasena;
         return $this;
     }
-
-
-
-
-
 
 
 

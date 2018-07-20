@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1> Mis Tickets</h1>
+
+    <table class="table table-striped">
+        <thead>
+
+        <tr>
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Asignado A</th>
+            <th>Subject</th>
+            <th>Estado</th>
+            <th>Prioridad</th>
+            <th>Acciones</th>
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        {% for ticket in tickets %}
+
+            <tr>
+                <th>{{ ticket.id }}</th>
+                <th>{{  ticket.fecha.date}}</th>
+                <th>{{ ticket.usuarioAsignadoId }}
+                <th>{{ ticket.subject }}</th>
+                <th>{{ticket.estado}}</th>
+                <th>{{ ticket.prioridad}}</th>
+                <th>
+                    <a title="Ver" class="btn btn-sm btn-primary" href="#ver">Ver</a>
+                </th>
+
+                </th>
+            </tr>
+
+
+
+
+
+        {% endfor %}
+        </tbody>
+
+
+    </table>
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block titulo %}Tickets{% endblock %}
+
+{% block tab1 %}Tickets{% endblock %}
+{% block tab2 %}Pendientes{% endblock %}
+{% block tab3 %}En Proceso{% endblock %}
+
+{% block status %}class="active"{% endblock %}
+

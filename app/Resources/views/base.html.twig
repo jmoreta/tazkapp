@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>Tazkapp-{% block titulo %}{% endblock %}  </title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset("/assets/css/bootstrap.min.css")}}" rel="stylesheet"  >
@@ -41,9 +41,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">Users</a></li>
-                <li><a href="#contact">Tickets</a></li>
+                <li {% block status %}{% endblock %}><a href="#home">{%block tab1 %}{% endblock %}</a></li>
+                <li {% block statu %}{% endblock %}><a href="#usuarios">{% block tab2 %}{% endblock %}</a></li>
+                <li {% block stat %}{% endblock %}><a href="#enproceso">{% block tab3 %}{% endblock %}</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
